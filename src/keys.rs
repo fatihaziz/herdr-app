@@ -434,4 +434,32 @@ mod tests {
             assert_eq!(super::parse(keys).err(), None);
         }
     }
+
+    #[test]
+    fn global_alt_up_passes_through_to_the_terminal_program() {
+        use gpui::Keystroke;
+        let alt_up = Keystroke::parse("alt-up").unwrap();
+        let alt_down = Keystroke::parse("alt-down").unwrap();
+        let binds = |bindings: &[super::KeyBinding], keys: &Keystroke, action: &str| {
+            bindings.iter().any(|b| {
+                b.match_keystrokes(&[keys.clone()]) == Some(false)
+                    && b.action().as_any().downcast_ref::<gpui_shell::action::ShellAction>().is_some_and(|a| a.id() == action)
+            })
+        };
+        // The intended configuration: Alt+Up belongs to the program (a
+        // global `terminal` binding installs nothing), Alt+Down keeps its
+        // shipped agent navigation.
+        let bindings = super::parse(r#"{"global":{"alt-up":"terminal","alt-down":"agent.next"}}"#).unwrap();
+        assert!(!binds(&bindings, &alt_up, "agent.prev"), "Alt+Up must not navigate agents");
+        assert!(
+            !bindings.iter().any(|b| b.match_keystrokes(&[alt_up.clone()]) == Some(false)),
+            "Alt+Up must have no binding at all"
+        );
+        assert!(binds(&bindings, &alt_down, "agent.next"), "Alt+Down keeps its shipped binding");
+
+        // Negative control: the shipped default is the interception this
+        // configuration replaces; an Alt+Up agent.prev binding is detectable.
+        #[cfg(not(target_os = "macos"))]
+        assert!(binds(&super::parse(super::DEFAULTS).unwrap(), &alt_up, "agent.prev"));
+    }
 }

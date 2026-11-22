@@ -27,9 +27,24 @@ export function checking(): boolean;
 /** Reads UTF-8 text (up to 1 MiB), or null if absent. Runs off the UI thread.
  *  `on`: from that machine (a space's `machine`). */
 export function readTextFile(path: string, options?: { on?: string | null }): Promise<string | null>;
-/** Writes UTF-8 text only if it still matches expected (null creates a new file).
- * Rejects on a stale snapshot; existing files are replaced atomically. */
+/** Writes UTF-8 text up to 1 MiB if it matches expected (null creates).
+ * Cooperating Herdr writers use an adjacent lock, with a five-second Busy timeout.
+ * Publication is atomic, but is not a power-loss guarantee. Paths and bytes are rechecked
+ * before publication; unrelated editors do not take the lock and can still race after that
+ * check, so this is not a universal compare-and-swap guarantee. Replacement failures may
+ * leave a named recovery temp and backup; do not discard either automatically. */
 export function writeTextFile(path: string, text: string, expected: string | null): Promise<null>;
+
+/** Resolve an existing directory on this machine. Rejects missing or non-directory paths. */
+export function canonicalPath(path: string): Promise<string>;
+/** List local directory entries in filename order without following child symlinks.
+ * Pages are not snapshots. Default limit 256; maximum 1024. */
+export function readDirectory(path: string, options?: { after?: string; limit?: number }): Promise<{ entries: { name: string; kind: "file" | "directory" | "symlink" | "other" }[]; next: string | null }>;
+/** Open an HTTPS URL in the system handler without a shell. Rejects credentials and control characters. */
+export function openExternalUrl(url: string): Promise<null>;
+/** Format exact nonnegative safe-integer counts or micro-USD using the Windows user locale.
+ * Values are decimal integer strings; USD results retain six fractional digits. */
+export function formatProjectValues(values: { kind: "count" | "usdMicros"; value: string }[]): Promise<string[]>;
 
 /** The agents people can start from a menu (entries with `run` in programs.json), most picked
  *  first, and whether each is installed: asked of the shell agents start in (on another machine,

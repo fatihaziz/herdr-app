@@ -972,6 +972,145 @@ fn exec_future(command: String, args: Vec<String>, cwd: Option<String>, on: Opti
     }
 }
 
+fn local_future(work: impl FnOnce() -> Result<Value, String> + Send + 'static) -> impl Future<Output = Result<HostValue, HostError>> + Send {
+    let (tx, rx) = async_channel::bounded(1);
+    std::thread::spawn(move || { let _ = tx.send_blocking(work()); });
+    async move {
+        let value = rx.recv().await.map_err(|e| HostError::new(e.to_string()))?.map_err(HostError::new)?;
+        Ok(to_host(&value))
+    }
+}
+
+fn local_directory(path: &str, after: Option<&str>, limit: usize) -> Result<Value, String> {
+    let mut entries = Vec::new();
+    for entry in std::fs::read_dir(path).map_err(|e| e.to_string())? {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let name = entry.file_name().into_string().map_err(|_| "Directory contains a non-UTF-8 filename".to_owned())?;
+        if after.is_some_and(|a| name.as_str() <= a) { continue; }
+        let ty = entry.file_type().map_err(|e| e.to_string())?;
+        let kind = if ty.is_symlink() { "symlink" } else if ty.is_file() { "file" } else if ty.is_dir() { "directory" } else { "other" };
+        entries.push((name, kind));
+    }
+    entries.sort_unstable_by(|a, b| a.0.cmp(&b.0));
+    let more = entries.len() > limit;
+    entries.truncate(limit);
+    let next = if more { entries.last().map(|e| e.0.clone()) } else { None };
+    Ok(json!({ "entries": entries.into_iter().map(|(name, kind)| json!({ "name": name, "kind": kind })).collect::<Vec<_>>(), "next": next }))
+}
+
+#[cfg(windows)]
+fn format_project_values(values: Value) -> Result<Value, String> {
+    use windows_sys::Win32::Globalization::{GetLocaleInfoEx, GetNumberFormatEx, LOCALE_SDECIMAL};
+    let values = values.as_array().ok_or("Expected an array")?;
+    let mut decimal = [0u16; 16];
+    let decimal_len = unsafe { GetLocaleInfoEx(std::ptr::null(), LOCALE_SDECIMAL, decimal.as_mut_ptr(), decimal.len() as i32) };
+    if decimal_len <= 1 { return Err(std::io::Error::last_os_error().to_string()); }
+    let decimal = String::from_utf16(&decimal[..decimal_len as usize - 1]).map_err(|e| e.to_string())?;
+    let mut output = Vec::with_capacity(values.len());
+    for value in values {
+        let kind = value.get("kind").and_then(Value::as_str).ok_or("Missing value kind")?;
+        let text = value.get("value").and_then(Value::as_str).ok_or("Missing decimal value")?;
+        if text.is_empty() || !text.bytes().all(|c| c.is_ascii_digit()) { return Err("Expected a nonnegative integer".into()); }
+        let number: u64 = text.parse().map_err(|_| "Integer out of range")?;
+        if number > 9_007_199_254_740_991 { return Err("Integer exceeds safe range".into()); }
+        let integer = match kind { "count" => number, "usdMicros" => number / 1_000_000, _ => return Err("Unknown value kind".into()) };
+        let wide: Vec<u16> = integer.to_string().encode_utf16().chain(Some(0)).collect();
+        let needed = unsafe { GetNumberFormatEx(std::ptr::null(), 0, wide.as_ptr(), std::ptr::null(), std::ptr::null_mut(), 0) };
+        if needed == 0 { return Err(std::io::Error::last_os_error().to_string()); }
+        let mut formatted = vec![0u16; needed as usize];
+        if unsafe { GetNumberFormatEx(std::ptr::null(), 0, wide.as_ptr(), std::ptr::null(), formatted.as_mut_ptr(), needed) } == 0 {
+            return Err(std::io::Error::last_os_error().to_string());
+        }
+        let formatted = String::from_utf16(&formatted[..needed as usize - 1]).map_err(|e| e.to_string())?;
+        let integer = formatted.split_once(&decimal).map_or(formatted.as_str(), |(i, _)| i);
+        output.push(if kind == "usdMicros" { format!("{integer}{decimal}{:06}", number % 1_000_000) } else { integer.to_owned() });
+    }
+    Ok(json!(output))
+}
+
+#[cfg(not(windows))]
+fn format_project_values(_values: Value) -> Result<Value, String> {
+    Err("Project locale formatting is available on Windows only".into())
+}
+
+fn validate_external_url(url: &str) -> Result<(), String> {
+    if url.chars().any(|c| c.is_control() || c.is_whitespace() || c == '\\') {
+        return Err("URL contains invalid characters".into());
+    }
+    let rest = url.strip_prefix("https://").ok_or("Only HTTPS URLs are allowed")?;
+    let authority = rest.split(['/', '?', '#']).next().unwrap_or_default();
+    let (host, port) = if let Some(ip) = authority.strip_prefix('[') {
+        let (address, suffix) = ip.split_once(']').ok_or("Invalid IPv6 authority")?;
+        address.parse::<std::net::Ipv6Addr>().map_err(|_| "Invalid IPv6 address")?;
+        (address, if suffix.is_empty() { None } else { Some(suffix.strip_prefix(':').ok_or("Invalid port")?) })
+    } else {
+        let (host, port) = match authority.split_once(':') {
+            Some((host, port)) => (host, Some(port)),
+            None => (authority, None),
+        };
+        if host.len() > 253 || host.is_empty() || host.split('.').any(|label| {
+            label.is_empty() || label.len() > 63 || label.starts_with('-') || label.ends_with('-')
+                || !label.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-')
+        }) { return Err("Invalid HTTPS host".into()); }
+        (host, port)
+    };
+    if host.is_empty() { return Err("Invalid HTTPS host".into()); }
+    if let Some(port) = port {
+        if port.is_empty() || !port.bytes().all(|b| b.is_ascii_digit()) || port.parse::<u16>().is_err() {
+            return Err("Invalid HTTPS port".into());
+        }
+    }
+    let bytes = url.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%' {
+            let pair = bytes.get(i + 1..i + 3).ok_or("Invalid percent encoding")?;
+            let hex = std::str::from_utf8(pair).map_err(|_| "Invalid percent encoding")?;
+            let byte = u8::from_str_radix(hex, 16).map_err(|_| "Invalid percent encoding")?;
+            if byte.is_ascii_control() { return Err("Encoded control character in URL".into()); }
+            i += 3;
+        } else {
+            i += 1;
+        }
+    }
+    #[cfg(windows)]
+    {
+        use windows_sys::Win32::Networking::WinHttp::{WinHttpCrackUrl, URL_COMPONENTS, WINHTTP_INTERNET_SCHEME_HTTPS};
+        let wide: Vec<u16> = url.encode_utf16().chain(Some(0)).collect();
+        let mut parts = URL_COMPONENTS {
+            dwStructSize: std::mem::size_of::<URL_COMPONENTS>() as u32,
+            dwHostNameLength: 1,
+            ..Default::default()
+        };
+        if unsafe { WinHttpCrackUrl(wide.as_ptr(), 0, 0, &mut parts) } == 0
+            || parts.nScheme != WINHTTP_INTERNET_SCHEME_HTTPS || parts.dwHostNameLength == 0 {
+            return Err("Invalid HTTPS URL".into());
+        }
+    }
+    Ok(())
+}
+
+fn open_external_url(url: &str) -> Result<(), String> {
+    validate_external_url(url)?;
+    #[cfg(windows)]
+    {
+        use std::os::windows::ffi::OsStrExt;
+        use windows_sys::Win32::UI::{Shell::ShellExecuteW, WindowsAndMessaging::SW_SHOWNORMAL};
+        let wide: Vec<u16> = std::ffi::OsStr::new(url).encode_wide().chain(Some(0)).collect();
+        let result = unsafe { ShellExecuteW(std::ptr::null_mut(), std::ptr::null(), wide.as_ptr(), std::ptr::null(), std::ptr::null(), SW_SHOWNORMAL) } as isize;
+        if result <= 32 { return Err(format!("Cannot open URL: ShellExecuteW returned {result}")); }
+    }
+    #[cfg(not(windows))]
+    {
+        let opener = if cfg!(target_os = "macos") { "open" } else { "xdg-open" };
+        let mut child = std::process::Command::new(opener).arg(url)
+            .stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null())
+            .spawn().map_err(|e| e.to_string())?;
+        std::thread::spawn(move || { let _ = child.wait(); });
+    }
+    Ok(())
+}
+
 fn module(inst: Instance, copy: u64) -> HostModule {
     let reads = Rc::new(RefCell::new(LiveReads::default()));
     LIVE_READS.with_borrow_mut(|copies| {
@@ -1007,6 +1146,37 @@ fn module(inst: Instance, copy: u64) -> HostModule {
             let path = a.string(0)?.to_owned();
             if checking() { tracing::warn!("check: mod wrote `{path}`; the write lands for real"); }
             Ok(crate::mod_files::write_text(path, a.string(1)?.to_owned(), expected))
+        })
+        .async_function("canonicalPath", |a| {
+            let path = a.string(0)?.to_owned();
+            Ok(local_future(move || {
+                let path = std::fs::canonicalize(path).map_err(|e| e.to_string())?;
+                if !path.is_dir() { return Err("Path is not a directory".into()); }
+                let path = path.into_os_string().into_string().map_err(|_| "Path is not UTF-8".to_owned())?;
+                Ok(json!(path))
+            }))
+        })
+        .async_function("readDirectory", |a| {
+            let path = a.string(0)?.to_owned();
+            let options = a.get(1).map(from_host).unwrap_or(Value::Null);
+            let after = match options.get("after") {
+                None | Some(Value::Null) => None,
+                Some(Value::String(s)) => Some(s.clone()),
+                _ => return Err(HostError::new("after must be a string")),
+            };
+            let limit = match options.get("limit") {
+                None => 256,
+                Some(v) => v.as_u64().filter(|n| (1..=1024).contains(n)).ok_or_else(|| HostError::new("limit must be an integer from 1 to 1024"))? as usize,
+            };
+            Ok(local_future(move || local_directory(&path, after.as_deref(), limit)))
+        })
+        .async_function("openExternalUrl", |a| {
+            let url = a.string(0)?.to_owned();
+            Ok(local_future(move || { open_external_url(&url)?; Ok(Value::Null) }))
+        })
+        .async_function("formatProjectValues", |a| {
+            let values = from_host(a.value(0)?);
+            Ok(local_future(move || format_project_values(values)))
         })
         .async_function("hc", |a| {
             if checking() { tracing::warn!("check: mod called hc; it runs for real"); }
@@ -1308,6 +1478,49 @@ pub fn prepare_load(inst: &Instance) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn external_url_rejects_invalid_authorities() {
+        for url in ["https://github.com/a", "https://github.com:443/a", "https://[::1]:8443/"] {
+            assert!(validate_external_url(url).is_ok(), "{url}");
+        }
+        for url in [
+            "http://github.com", "https://user@github.com/", "https://github.com:abc/",
+            "https://github.com:65536/", "https://github.com:/", "https://[::1]evil/",
+            "https://[not-ip]/", "https://-bad.example/", "https://a..example/",
+            "https://github.com\\@evil.com/", "https://github.com/%0a", "https://github.com/%zz",
+            "https://github.com/\n",
+        ] {
+            assert!(validate_external_url(url).is_err(), "{url}");
+        }
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn project_values_keep_microdollar_precision() {
+        let values = json!([{"kind":"count","value":"0"},{"kind":"usdMicros","value":"1"}]);
+        let result = format_project_values(values).unwrap();
+        assert_eq!(result[0], "0");
+        assert!(result[1].as_str().unwrap().ends_with("000001"));
+        assert!(format_project_values(json!([{"kind":"count","value":"9007199254740992"}])).is_err());
+        assert!(format_project_values(json!([{"kind":"usdMicros","value":"-1"}])).is_err());
+    }
+
+    #[test]
+    fn directory_pages_are_sorted_and_exclusive() {
+        let root = crate::test_tmp().join(format!("herdr-directory-{}", std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::fs::write(root.join("b"), "").unwrap();
+        std::fs::write(root.join("a"), "").unwrap();
+        let path = root.to_str().unwrap();
+        let first = local_directory(path, None, 1).unwrap();
+        assert_eq!(first["entries"][0]["name"], "a");
+        assert_eq!(first["next"], "a");
+        let second = local_directory(path, Some("a"), 1).unwrap();
+        assert_eq!(second["entries"][0]["name"], "b");
+        assert!(second["next"].is_null());
+        std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn an_input_selection_uses_the_theme_selection_colour() {

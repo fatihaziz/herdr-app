@@ -1,0 +1,9 @@
+{
+  "place": "none",
+  "overlay": {
+    "kind": "window",
+    "width": 1120,
+    "height": 720
+  },
+  "title": "Task board"
+}

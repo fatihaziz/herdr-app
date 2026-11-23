@@ -1,0 +1,9 @@
+{
+  "place": "none",
+  "overlay": {
+    "kind": "window",
+    "width": 440,
+    "height": 380
+  },
+  "title": "9Router"
+}

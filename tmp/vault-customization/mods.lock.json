@@ -1,0 +1,622 @@
+{
+  "version": 1,
+  "generated": "2026-11-16",
+  "mods": {
+    "agents-stacked": {
+      "repo": "https://github.com/fedorovvvv/herdr-omp-progress",
+      "ref": "db4894f5e4b9b5aff56f25a755146ba839cb6334",
+      "path": "mods/agents-stacked",
+      "license": "MIT",
+      "local_delta": [
+        "gpui-kit.d.ts and jsconfig.json not copied."
+      ],
+      "files": {
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "6aa8aa2e7936e198729865a74e3b7f6ca2be82f004a964e5037a54a960eea6a8",
+          "bytes": 1067
+        },
+        "main.js": {
+          "sha256": "1f05e4e601e05bc029746d8f85df1d6b1612f6af39ec96aa76d5a2bedc8318af",
+          "bytes": 27543
+        },
+        "mod.json": {
+          "sha256": "6bbb067f3e531737465d2b3a1276cd696b282040319ba671172e93b0873d31d5",
+          "bytes": 134
+        },
+        "RECIPE.md": {
+          "sha256": "8ea628df635273793ef7894453f0859da077e33fa1adf2ae541b32128c17196d",
+          "bytes": 6458
+        }
+      }
+    },
+    "token-usage": {
+      "repo": "https://github.com/nakamotosai/herdr-agent-panels",
+      "ref": "c1ce242b6258ce3646e9b5e96a6a3986f57f9950",
+      "path": "token-usage/mods/token-usage",
+      "license": "MIT",
+      "local_delta": [],
+      "files": {
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "3d373ed82c7ee6b0801f2ad7bec4166c7583eb019626aba7c6b3b0d12d1b21e0",
+          "bytes": 1074
+        },
+        "main.js": {
+          "sha256": "f083da25fe129cc481eabf5f56bf3eb3135048a9cd67c2cf6f4183d8c6560779",
+          "bytes": 24369
+        },
+        "mod.json": {
+          "sha256": "761a429134a16ab0fd51d96031fd19ac890284a046bdb5b91e9e6a3f95f6fdab",
+          "bytes": 64
+        },
+        "RECIPE.md": {
+          "sha256": "db61d51621473a2652135e7d64472166d78b989f0fd40f8ea190d7ca1c6c1351",
+          "bytes": 13756
+        },
+        "store.js": {
+          "sha256": "110cb2524359a683439ac712a268bd83636e372457c7cfb4fb3583ae85a7d42b",
+          "bytes": 7390
+        }
+      }
+    },
+    "convo-log": {
+      "repo": "https://github.com/nakamotosai/herdr-agent-panels",
+      "ref": "c1ce242b6258ce3646e9b5e96a6a3986f57f9950",
+      "path": "convo-log/mods/convo-log",
+      "license": "MIT",
+      "local_delta": [],
+      "files": {
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "3d373ed82c7ee6b0801f2ad7bec4166c7583eb019626aba7c6b3b0d12d1b21e0",
+          "bytes": 1074
+        },
+        "main.js": {
+          "sha256": "1c6c67e46c8475e79b172f1982649b90cabc3a204dec70f3151fa8a76d627dc3",
+          "bytes": 18243
+        },
+        "mod.json": {
+          "sha256": "761a429134a16ab0fd51d96031fd19ac890284a046bdb5b91e9e6a3f95f6fdab",
+          "bytes": 64
+        },
+        "RECIPE.md": {
+          "sha256": "515657998a19cf4c13ac6d4d52c5001f43366b366971261f8e2a59c9ada891df",
+          "bytes": 13395
+        }
+      }
+    },
+    "task-sched": {
+      "repo": "https://github.com/nakamotosai/herdr-agent-panels",
+      "ref": "c1ce242b6258ce3646e9b5e96a6a3986f57f9950",
+      "path": "task-sched/mods/task-sched",
+      "license": "MIT",
+      "local_delta": [
+        "No seed task: the list starts empty; scheduling is opt-in.",
+        "Verbatim code otherwise."
+      ],
+      "files": {
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "3d373ed82c7ee6b0801f2ad7bec4166c7583eb019626aba7c6b3b0d12d1b21e0",
+          "bytes": 1074
+        },
+        "main.js": {
+          "sha256": "4e30179bd07c5e9880e6985291f3ef1688674987784e62c96396c80136286d91",
+          "bytes": 14552
+        },
+        "mod.json": {
+          "sha256": "761a429134a16ab0fd51d96031fd19ac890284a046bdb5b91e9e6a3f95f6fdab",
+          "bytes": 64
+        },
+        "RECIPE.md": {
+          "sha256": "5dbabaa7945682b9c68fd731f0799a261ddb1068c6a08e2a6c7848c42ab69056",
+          "bytes": 16640
+        }
+      }
+    },
+    "panel-buttons": {
+      "repo": "https://github.com/nakamotosai/herdr-agent-panels",
+      "ref": "c1ce242b6258ce3646e9b5e96a6a3986f57f9950",
+      "path": "panel-buttons/mods/panel-buttons",
+      "license": "MIT",
+      "local_delta": [],
+      "files": {
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "3d373ed82c7ee6b0801f2ad7bec4166c7583eb019626aba7c6b3b0d12d1b21e0",
+          "bytes": 1074
+        },
+        "main.js": {
+          "sha256": "7dcbda1c23e478f2ef0dbf3aaf3de698cd54a7743ef43b27ad9b0787b088c38b",
+          "bytes": 4967
+        },
+        "mod.json": {
+          "sha256": "281cf4ea55865a5e324abe8a8f2bfa22746b9b066e6134a1a0df24b5ca2a738b",
+          "bytes": 46
+        },
+        "RECIPE.md": {
+          "sha256": "ab784190a7169938549811bb70ad74f6ade97a1648795e5af88818d8d423b4b8",
+          "bytes": 6844
+        }
+      }
+    },
+    "session-search": {
+      "repo": "https://github.com/lucasmen9527/herdr-session-search",
+      "ref": "17d48c540f4124ed8e87130d5d73e8b8a808446b",
+      "path": "mods/session-search",
+      "license": "MIT",
+      "local_delta": [
+        "Removed --dangerously-skip-permissions and the skipPermissions option at the source (indexer/search.mjs); caller never opts in.",
+        "Removed the Orca-only Codex source root and the resumeHome/CODEX_HOME env wrap it fed (index.mjs, logic.js); default Codex home and all other agents unchanged.",
+        "Windows: exec('test',['-d',cwd]) replaced with a Node fs directory probe (main.js); shortPath normalizes backslashes for display.",
+        "scripts/install.mjs, package.json and test/ not copied; no upstream installer run."
+      ],
+      "files": {
+        "indexer/cli.mjs": {
+          "sha256": "b594aabe4d6742b82d6b786baf2213312add60b90d52b046f99fbeb543560402",
+          "bytes": 3662
+        },
+        "indexer/db.mjs": {
+          "sha256": "0765bde0baad894bbe6e4c82fb6b1117651666ba16d9f890bf7ed74b4143a79c",
+          "bytes": 2695
+        },
+        "indexer/index.mjs": {
+          "sha256": "6c7db3d40fb9c7803d74ad4666a3e89e1fd21b44e3d0388ea86c6995bd2db8ef",
+          "bytes": 13751
+        },
+        "indexer/parsers.mjs": {
+          "sha256": "acc20f4fb29cb76fc8cdb6534753e62f6ae13a064a6ed469bc2b903e7b93950c",
+          "bytes": 3950
+        },
+        "indexer/search.mjs": {
+          "sha256": "9ef6d54f1053d90b04581db93e0da2becdd00d8dd0ea21aab01cbfe6d2d7eacd",
+          "bytes": 4963
+        },
+        "indexer/text.mjs": {
+          "sha256": "af053de0fc35c3f281d50566103e3902065a7d899c4e3fdcc23bf964ed008062",
+          "bytes": 2273
+        },
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "6623a66f06ed811ea88f819c2a8b691c9aab73fc93751c7afd50c3dec51ee79c",
+          "bytes": 1069
+        },
+        "logic.js": {
+          "sha256": "966579265b74a2ee9fb928fb0d71a952e281e81828f58a529fa945e1ace35706",
+          "bytes": 3043
+        },
+        "main.js": {
+          "sha256": "9cf5c9fcefb2b4924b70249e371183d551244c06c050f4a68903e1352327ccb5",
+          "bytes": 10145
+        },
+        "mod.json": {
+          "sha256": "5ac8b83c2fe385aba254805b54234be101d4498fea367d79b2c9ebccd6ad7247",
+          "bytes": 134
+        },
+        "RECIPE.md": {
+          "sha256": "22dddf175e46e3ddbedd5a33651e8827bfeee4c260e074b50f7d1fd0ca3944dc",
+          "bytes": 5399
+        }
+      }
+    },
+    "git": {
+      "repo": "https://github.com/SimonBystromTableCheck/herdr-mods",
+      "ref": "0e9a01bf39461ec7871224511abfb7eec509592c",
+      "path": "git/mods/git",
+      "license": "MIT",
+      "local_delta": [
+        "Windows: shell detected as Git Bash (bash) then pwsh/powershell; all login-shell argv go through shPrefix(); exec('open') routed per platform (openUrl); editor default becomes notepad on Windows and config.json editor is empty; last /bin/zsh fallback replaced with /bin/sh.",
+        "printf-into-file still uses the detected shell; interactive rebase still uses perl/seq-edit.pl and therefore Git Bash.",
+        "git-conflicts not installed.",
+        "Fixed: openUrl calls exec('open') on macOS instead of recursing; conflict writes use the detected shell; editor falls back to notepad on Windows."
+      ],
+      "files": {
+        "ai.svg": {
+          "sha256": "cab95b9e649de54211ed285604a2fa49090cbbb640469721577e1a52b4a4f579",
+          "bytes": 285
+        },
+        "config.json": {
+          "sha256": "509d320ef5f40a85a5c4f52dc78bc40a57a7c1d0445dfa0acb7a31cd4bad84ba",
+          "bytes": 411
+        },
+        "copy.svg": {
+          "sha256": "2f8222c2777447cd498077c0fc3a5eedca77188171f225a849aefc25c3b4f84d",
+          "bytes": 304
+        },
+        "fetch.svg": {
+          "sha256": "51bcdd537497c19ec77eb04107c2f46fe67fed28a134fa1070e2fc0575b1109a",
+          "bytes": 355
+        },
+        "files.js": {
+          "sha256": "b501f37b3bb07c5d5b07a7e067eeba0b3356c57f162d4ff7d48c6b2219361297",
+          "bytes": 12617
+        },
+        "git-branch.svg": {
+          "sha256": "d2f7cf0c6d1944b9453268f1155da2e93374fad83beeae5ab9a7d5e3584e2204",
+          "bytes": 348
+        },
+        "git.js": {
+          "sha256": "7bd14f6daa8afdcad3661760928ddf74d307dd65935e4df53b9d5480d39a175f",
+          "bytes": 10381
+        },
+        "graph.js": {
+          "sha256": "f202baeb34a0e448168006e4a261ff8e6c79f6fddd459ce52f0ea677aebeab30",
+          "bytes": 3695
+        },
+        "keybar.js": {
+          "sha256": "69493b77f38ab73bce36427aa7f75d54be8acc2c237d5dc4f423b6e75870641e",
+          "bytes": 3799
+        },
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "c671de7813129f0cc8e7d4cc7181ec0f2959e543e7dcdd9dd38c0e94b121c079",
+          "bytes": 1071
+        },
+        "main.js": {
+          "sha256": "2bc635cedd4e8bc0ea051e3424abb2e4847833e6741df8803311eb425af95dc8",
+          "bytes": 136434
+        },
+        "mod.json": {
+          "sha256": "07239bb0e9e99dd40e0f5b73f8575f5cca25f2e13579f9bad9868b11cb95bf84",
+          "bytes": 350
+        },
+        "panel.js": {
+          "sha256": "52f8b9118d659bbd7950a1cd078c3213acd0730e9dbbe5fb873b94027a8bd59c",
+          "bytes": 2849
+        },
+        "popout.svg": {
+          "sha256": "5a1ffae16526bde5299958b8e6e532924e7760f35d4a05ff3459ad88dc56331c",
+          "bytes": 300
+        },
+        "pull.svg": {
+          "sha256": "25d66cf072c7b70ba087872e7d3017c4d38d31dfacb42a80c03edda4fc8bd9b7",
+          "bytes": 234
+        },
+        "push.svg": {
+          "sha256": "6f14eb29130f2f93c6fad4199b045b4c3eb7e6a6220d0338a822a3d9a56233df",
+          "bytes": 233
+        },
+        "seq-edit.pl": {
+          "sha256": "8efd63cb5b6441860f62f29627175f70a51c3ffea866e07ceb1b21df637a75e8",
+          "bytes": 1885
+        },
+        "update.js": {
+          "sha256": "377d7c65b7e0526930ab7b97d41cc5dcc90803babdf73a60a904d078f6671772",
+          "bytes": 7831
+        },
+        "UPDATE.md": {
+          "sha256": "6e6aed89e2ce69d310205c7a3d6c79b92fcf36b082b1ee904699a5e5c60b89dd",
+          "bytes": 4478
+        }
+      }
+    },
+    "servers": {
+      "repo": "https://github.com/SimonBystromTableCheck/herdr-mods",
+      "ref": "0e9a01bf39461ec7871224511abfb7eec509592c",
+      "path": "servers/mods/servers",
+      "license": "MIT",
+      "local_delta": [
+        "Windows: userShell() probes bash then pwsh/powershell; shellArgs carried to hc run; POSIX listing/detection scripts run through the detected shell; test -d replaced with a Node fs probe; URLs open per platform.",
+        "Remove is now two-step in place (notify, then second press).",
+        "Fixed: openUrl calls exec('open') on macOS instead of recursing."
+      ],
+      "files": {
+        "external.svg": {
+          "sha256": "5a1ffae16526bde5299958b8e6e532924e7760f35d4a05ff3459ad88dc56331c",
+          "bytes": 300
+        },
+        "keybar.js": {
+          "sha256": "69493b77f38ab73bce36427aa7f75d54be8acc2c237d5dc4f423b6e75870641e",
+          "bytes": 3799
+        },
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "c671de7813129f0cc8e7d4cc7181ec0f2959e543e7dcdd9dd38c0e94b121c079",
+          "bytes": 1071
+        },
+        "main.js": {
+          "sha256": "58127e058c49e4e94cdfcb313c635a13a39d37aa0b3f48ec81b8c554e911ab6a",
+          "bytes": 29946
+        },
+        "mod.json": {
+          "sha256": "de81af71978cfc4b8d62be450beaf96b809b068f4f8d2a2de9923d5f12227d84",
+          "bytes": 337
+        },
+        "panel.js": {
+          "sha256": "52f8b9118d659bbd7950a1cd078c3213acd0730e9dbbe5fb873b94027a8bd59c",
+          "bytes": 2849
+        },
+        "play.svg": {
+          "sha256": "c7cd6f9962b5b91db2991b3d717617201dfb62576adbc61188b24ad7cb67f65b",
+          "bytes": 226
+        },
+        "restart.svg": {
+          "sha256": "a2003347c21ace78a559d54e60b12391efccc75d60c71fd15feed54190cefc2b",
+          "bytes": 269
+        },
+        "server.svg": {
+          "sha256": "41a942cb9c9011def4c0b9a05f4cd02f3fcc762e7617c09610bc23264786c3f7",
+          "bytes": 268
+        },
+        "stop.svg": {
+          "sha256": "f386635e8da54b3cb5129a3cc0a922cd6aad033443380188ea6a5105df924002",
+          "bytes": 237
+        },
+        "trash.svg": {
+          "sha256": "294d07f4acb85cb81d58c5693b7bb462c50b72db278e9f277d281cbc7d34b8cb",
+          "bytes": 302
+        },
+        "update.js": {
+          "sha256": "377d7c65b7e0526930ab7b97d41cc5dcc90803babdf73a60a904d078f6671772",
+          "bytes": 7831
+        },
+        "UPDATE.md": {
+          "sha256": "6e6aed89e2ce69d310205c7a3d6c79b92fcf36b082b1ee904699a5e5c60b89dd",
+          "bytes": 4478
+        }
+      }
+    },
+    "leader": {
+      "repo": "https://github.com/SimonBystromTableCheck/herdr-mods",
+      "ref": "0e9a01bf39461ec7871224511abfb7eec509592c",
+      "path": "leader/mods/leader",
+      "license": "MIT",
+      "local_delta": [
+        "Upstream ctrl-a binding merged as an addition."
+      ],
+      "files": {
+        "bindings.js": {
+          "sha256": "d9e27fba8bae0b74ddf08109d4df0e3f62dab49b17a1df6d9d91ad3f3eaad453",
+          "bytes": 2907
+        },
+        "LICENSE-UPSTREAM.txt": {
+          "sha256": "c671de7813129f0cc8e7d4cc7181ec0f2959e543e7dcdd9dd38c0e94b121c079",
+          "bytes": 1071
+        },
+        "main.js": {
+          "sha256": "9728bc6ba838f92f90c8a248c8c671b7cc79658ed17cd6095aae63824ff5a2d9",
+          "bytes": 10750
+        },
+        "mod.json": {
+          "sha256": "646d3a6e9f7cbd13de950efdca14cea5ff8bcbd342330ff46079679d2cbb7cef",
+          "bytes": 256
+        },
+        "panel.js": {
+          "sha256": "52f8b9118d659bbd7950a1cd078c3213acd0730e9dbbe5fb873b94027a8bd59c",
+          "bytes": 2849
+        },
+        "UPDATE.md": {
+          "sha256": "6e6aed89e2ce69d310205c7a3d6c79b92fcf36b082b1ee904699a5e5c60b89dd",
+          "bytes": 4478
+        }
+      }
+    },
+    "task-board": {
+      "repo": null,
+      "ref": "local",
+      "path": "native",
+      "license": "same as vault",
+      "local_delta": [
+        "Native; herdr-corral not vendored (repo has no license file).",
+        "Gantt uses one accent plus muted for Done, with a legend; stage chips carry a state icon.",
+        "Write callbacks use their own cx via cx.spawn; CAS retry only when the file actually moved; save errors persist until dismissed or the next successful save.",
+        "Board/Gantt open as a 1120x720 window; five fixed 196px columns in a horizontal scroll area; Esc closes the window; place none + overlay window in mod.json.",
+        "Column bodies and Gantt rows take a measured height from the window (a flex_1 body under a horizontal scroll measured zero, hiding every card).",
+        "Card actions moved to a row of their own; dates own a full line; columns are 204px so every icon box stays visible."
+      ],
+      "files": {
+        "icons/agent.svg": {
+          "sha256": "7f499affea09c6429b17756296c90f273bb2a29269930fe1f913ed2dc76dc313",
+          "bytes": 259
+        },
+        "icons/board.svg": {
+          "sha256": "6f5ff459bb9acedf89133e1882d2aa3134eb100bd21416037f17cf7c1fa373ed",
+          "bytes": 321
+        },
+        "icons/calendar.svg": {
+          "sha256": "b73d318244024ccef7f50888a48d0348289c79073042a9fd8fb599ec4c94b155",
+          "bytes": 291
+        },
+        "icons/check.svg": {
+          "sha256": "790315e381a6121b57adb6be13179dedcfdcf97128f7a0ea568c6ee00491f733",
+          "bytes": 199
+        },
+        "icons/chevron-left.svg": {
+          "sha256": "aa023dee4c38cba69d2269c76170de03be45028a1ec901d7ba882e9d9d49f6ff",
+          "bytes": 200
+        },
+        "icons/chevron-right.svg": {
+          "sha256": "af5feaf4a6f09c77f08b60339ad545527acb5122f5ce1f916bc5e1ca9edd2bcf",
+          "bytes": 202
+        },
+        "icons/dot.svg": {
+          "sha256": "89ad993674416952ff68b128cf6524bd342fe3c165ac81b6116157234f43a511",
+          "bytes": 175
+        },
+        "icons/edit.svg": {
+          "sha256": "4c49bd4154a32ad0c9dfebd89085152d52e2372462b0d6bf0589d1279cbf7145",
+          "bytes": 219
+        },
+        "icons/gantt.svg": {
+          "sha256": "4ac7a89b881c3ce68dd7c529b581d91b0b5fd7e6f2fa3dba59b01b02afc34957",
+          "bytes": 223
+        },
+        "icons/leader.svg": {
+          "sha256": "8429fd0b4d1a0adf370a6cdb12d1ab9d61aa44684358faec0398563f16ec882e",
+          "bytes": 242
+        },
+        "icons/log.svg": {
+          "sha256": "ce40ea4647507165b030733e33e13e9f0f5d407671bcea6fd48ffbd88b6f5749",
+          "bytes": 257
+        },
+        "icons/plus.svg": {
+          "sha256": "9aa970be1b5e7b782bd5af32fb59728a7754fc044db2098a36f8e0255b1f8ab5",
+          "bytes": 206
+        },
+        "icons/refresh.svg": {
+          "sha256": "477a1c21204bfd7a21d52064313e0060047f9fde15a4bf14883f3f5167fa6d82",
+          "bytes": 229
+        },
+        "icons/router.svg": {
+          "sha256": "605875be263578cc7c8d54af803226a661e03d018f4b9fb04c17b49b26416a9a",
+          "bytes": 386
+        },
+        "icons/schedule.svg": {
+          "sha256": "7c2df4bf90c6198f17a4e5b7de361a06a1749d1203b4594e6154dc16d9d702b3",
+          "bytes": 304
+        },
+        "icons/search.svg": {
+          "sha256": "f6921049e11f4c0d271bd9439cf01b367448da4e1ee37e6ae3abf019284bd796",
+          "bytes": 225
+        },
+        "icons/servers.svg": {
+          "sha256": "7bdbbc3f09e7c72b75489979f0ca9aa6d68d917a36b457e1d3accd608dabecde",
+          "bytes": 325
+        },
+        "icons/trash.svg": {
+          "sha256": "74f40276cf7bf4c80d4f4398202d048a0c4bedf4512b37c55d24fba6fa7957d5",
+          "bytes": 255
+        },
+        "icons/usage.svg": {
+          "sha256": "68b8b166259fbe75c46690354433f435217a3094d5eabdd82a8a5dbc2ee16820",
+          "bytes": 262
+        },
+        "icons/x.svg": {
+          "sha256": "53a893fd8c80da9de7092f7e00fcea81466b6ecaa0cbab4bae70eeb0aa27f911",
+          "bytes": 210
+        },
+        "logic.js": {
+          "sha256": "901e44943275d4c3df41afa348d1c5f1c026af01f3da6774f0406a28727861a0",
+          "bytes": 7202
+        },
+        "main.js": {
+          "sha256": "c60cdfad53437d297affdf37e680b3663d08821786eb6270919ad2e472ecd311",
+          "bytes": 30249
+        },
+        "mod.json": {
+          "sha256": "bb6ecf5d7e5477c5b6c49f55d73c80cad2aa9a1d2a5c93a6747cb1f736dca2ce",
+          "bytes": 135
+        }
+      }
+    },
+    "ninerouter": {
+      "repo": null,
+      "ref": "local",
+      "path": "native",
+      "license": "same as vault",
+      "local_delta": [
+        "Exact RouterBuild status/start/stop contract; loopback-only dashboard; no api-key call, no kill path, no forced retry.",
+        "Lifecycle calls run inside cx.spawn with the spawn's own cx; no cx is stored between awaits.",
+        "ensure releases the status busy slot before one shared doStart, so the ensure-once start actually runs; start button and ensure share that one guarded path.",
+        "Start polls authenticated owned status independently of inherited output pipes, with a four-minute observation deadline and ten-minute launcher timeout.",
+        "Permanent compact chip mounted in the status row owns automatic startup; control windows observe and explicit starts share an in-flight guard."
+      ],
+      "files": {
+        "icons/external.svg": {
+          "sha256": "9aa970be1b5e7b782bd5af32fb59728a7754fc044db2098a36f8e0255b1f8ab5",
+          "bytes": 206
+        },
+        "icons/play.svg": {
+          "sha256": "af5feaf4a6f09c77f08b60339ad545527acb5122f5ce1f916bc5e1ca9edd2bcf",
+          "bytes": 202
+        },
+        "icons/refresh.svg": {
+          "sha256": "477a1c21204bfd7a21d52064313e0060047f9fde15a4bf14883f3f5167fa6d82",
+          "bytes": 229
+        },
+        "icons/router.svg": {
+          "sha256": "605875be263578cc7c8d54af803226a661e03d018f4b9fb04c17b49b26416a9a",
+          "bytes": 386
+        },
+        "icons/stop.svg": {
+          "sha256": "53a893fd8c80da9de7092f7e00fcea81466b6ecaa0cbab4bae70eeb0aa27f911",
+          "bytes": 210
+        },
+        "main.js": {
+          "sha256": "7f37d11fdedb605c83e053c5b4870a75c2f86c3e56bc297a3f7367b585ad1571",
+          "bytes": 15247
+        },
+        "mod.json": {
+          "sha256": "3c7acaafc6915e08f4f84a4e5ba0fc244be46131d6d8d0341f5c8b1766fa7297",
+          "bytes": 131
+        }
+      }
+    },
+    "launch-bar": {
+      "repo": null,
+      "ref": "local",
+      "path": "native",
+      "license": "same as vault",
+      "local_delta": [
+        "Board/Gantt open the task-board window; Router opens the ninerouter control window in observe mode."
+      ],
+      "files": {
+        "icons/board.svg": {
+          "sha256": "6f5ff459bb9acedf89133e1882d2aa3134eb100bd21416037f17cf7c1fa373ed",
+          "bytes": 321
+        },
+        "icons/gantt.svg": {
+          "sha256": "4ac7a89b881c3ce68dd7c529b581d91b0b5fd7e6f2fa3dba59b01b02afc34957",
+          "bytes": 223
+        },
+        "icons/git.svg": {
+          "sha256": "2eb40e0374ec3f1886b16eda900ae92c21503c3001f3bd75f531e7e32ab078ac",
+          "bytes": 347
+        },
+        "icons/leader.svg": {
+          "sha256": "8429fd0b4d1a0adf370a6cdb12d1ab9d61aa44684358faec0398563f16ec882e",
+          "bytes": 242
+        },
+        "icons/log.svg": {
+          "sha256": "ce40ea4647507165b030733e33e13e9f0f5d407671bcea6fd48ffbd88b6f5749",
+          "bytes": 257
+        },
+        "icons/router.svg": {
+          "sha256": "605875be263578cc7c8d54af803226a661e03d018f4b9fb04c17b49b26416a9a",
+          "bytes": 386
+        },
+        "icons/schedule.svg": {
+          "sha256": "7c2df4bf90c6198f17a4e5b7de361a06a1749d1203b4594e6154dc16d9d702b3",
+          "bytes": 304
+        },
+        "icons/search.svg": {
+          "sha256": "f6921049e11f4c0d271bd9439cf01b367448da4e1ee37e6ae3abf019284bd796",
+          "bytes": 225
+        },
+        "icons/servers.svg": {
+          "sha256": "7bdbbc3f09e7c72b75489979f0ca9aa6d68d917a36b457e1d3accd608dabecde",
+          "bytes": 325
+        },
+        "icons/usage.svg": {
+          "sha256": "68b8b166259fbe75c46690354433f435217a3094d5eabdd82a8a5dbc2ee16820",
+          "bytes": 262
+        },
+        "main.js": {
+          "sha256": "f0be3144f7a11c3eb8ea5eec3b6ff60b2bf14dacda0f27394e74020e17c16a8c",
+          "bytes": 2664
+        },
+        "mod.json": {
+          "sha256": "25b166e6c84bac8cc059f226e4050a1a42a87c96d9fc437414479e8724bf8a77",
+          "bytes": 25
+        }
+      }
+    }
+  },
+  "omp_extensions_source": {
+    "repo": "https://github.com/fedorovvvv/herdr-omp-progress",
+    "ref": "db4894f5e4b9b5aff56f25a755146ba839cb6334",
+    "license": "MIT",
+    "note": "Checked against the native contract, packages/coding-agent/src/extensibility/extensions/types.ts: session_compact is a real extension event (line 1913) and is kept; ctx.setInterval and ctx.clearTimer are documented (line 899) and are used; todo_auto_clear is an AgentSessionEvent, not an extension event, so its handler was removed rather than left dead. All other events used here (session_start/switch/branch/tree, agent_start/end, input, tool_result, session_shutdown) are in the same union."
+  },
+  "omp_extensions": {
+    "herdr-session-label.ts": {
+      "sha256": "635df8cba31e913fe6a0dd222194693ed691add76613cd22417dbf8a6ee5a145",
+      "bytes": 1671
+    },
+    "herdr-subagent-count.ts": {
+      "sha256": "35dd5c9dbd8dc40489dc26b351c9ef6093e320e76cd662d3fbfe41106d29e60c",
+      "bytes": 2185
+    },
+    "herdr-subagent-progress.ts": {
+      "sha256": "acdf686b24d55fa40f35f6d93b447531dd3f36163bbc8677fa8d7b6c8dc85970",
+      "bytes": 10999
+    },
+    "herdr-todo-progress.ts": {
+      "sha256": "6a0ffbb57dee089fa5182e8df96062a5fec18062715a4a9ca55ad6a461753653",
+      "bytes": 3445
+    }
+  }
+}
